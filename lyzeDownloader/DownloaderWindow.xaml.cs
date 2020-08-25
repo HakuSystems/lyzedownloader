@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using System.Linq.Expressions;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using System.Net.Http;
 
 namespace lyzeDownloader
 {
@@ -42,47 +43,35 @@ namespace lyzeDownloader
 
         #region WindowLoaded
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             #region Auto Download
 
-            string Version = versionNumber.Text.ToString();
-            Version = "V1.0";
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead(PathStrings.VersionURL);
-            StreamReader reader = new StreamReader(stream);
-            String content = reader.ReadToEnd();
+            versionNumber.Text = "V" + Application.ResourceAssembly.ManifestModule.Assembly.GetName().Version.ToString();
 
-            try
-            {
-                if (content.Contains(Version))
-                {
-                    windowMessageBox.IsOpen = true;
-                    windowMessageBoxIcon.Kind = PackIconKind.Information;
-                    windowMessageBoxBtn.Content = "Okay";
-                    windowMessageBoxDownloadBtn.IsEnabled = false;
-                    windowMessageBoxDownloadBtn.Visibility = Visibility.Hidden;
-                    windowMessageBoxText.Text = "Du Bist Auf den Neusten Stand.";
-                }
-                else
-                {
-                    windowMessageBox.IsOpen = true;
-                    windowMessageBoxIcon.Kind = PackIconKind.Information;
-                    windowMessageBoxBtn.Content = "Okay";
-                    windowMessageBoxDownloadBtn.IsEnabled = true;
-                    windowMessageBoxDownloadBtn.Visibility = Visibility.Visible;
-                    windowMessageBoxText.Text = "Ein Update Ist bereit.";
-                }
+            HttpClient httpClient = new HttpClient();
 
-            }
-            catch (Exception ex)
+            var result = await httpClient.GetAsync(PathStrings.VersionURL);
+            var strServerVersion = await result.Content.ReadAsStringAsync();
+            var serverVersion = Version.Parse(strServerVersion);
+            var thisVersion = Application.ResourceAssembly.ManifestModule.Assembly.GetName().Version;
+            if (serverVersion > thisVersion)
             {
                 windowMessageBox.IsOpen = true;
-                windowMessageBoxIcon.Kind = PackIconKind.Error;
+                windowMessageBoxIcon.Kind = PackIconKind.Information;
+                windowMessageBoxBtn.Content = "Okay";
+                windowMessageBoxDownloadBtn.IsEnabled = true;
+                windowMessageBoxDownloadBtn.Visibility = Visibility.Visible;
+                windowMessageBoxText.Text = "Ein Update Ist bereit.";
+            }
+            else
+            {
+                windowMessageBox.IsOpen = true;
+                windowMessageBoxIcon.Kind = PackIconKind.Information;
                 windowMessageBoxBtn.Content = "Okay";
                 windowMessageBoxDownloadBtn.IsEnabled = false;
                 windowMessageBoxDownloadBtn.Visibility = Visibility.Hidden;
-                windowMessageBoxText.Text = ex.Message;
+                windowMessageBoxText.Text = "Du Bist Auf den Neusten Stand.";
             }
 
             #endregion
@@ -226,7 +215,7 @@ namespace lyzeDownloader
             Directory.CreateDirectory(PathStrings.desktopPath + PathStrings.AppExecutablePath);
             client.DownloadProgressChanged += client_DownloadProgressChanged;
             client.DownloadFileCompleted += client_DownloadFileCompleted;
-            client.DownloadFileAsync(new Uri(PathStrings.AppExecutableURL), PathStrings.desktopPath + PathStrings.AppExecutablePath + "lyzeDownloader.exe");
+            client.DownloadFileAsync(new Uri(PathStrings.AppExecutableURL), PathStrings.desktopPath + PathStrings.AppExecutablePath + $"lyzeDownloaderUpdated.exe");
 
         }
 
