@@ -83,30 +83,6 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
-<!--#region MessageBox-->
-            <materialDesign:DialogHost x:Name="windowMessageBox" IsOpen="False" BorderBrush="#1b1b1a" BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="5">
-                <materialDesign:DialogHost.DialogContent>
-                    <Grid Width="300" Height="150" HorizontalAlignment="Center" Background="#1b1b1a">
-                        <StackPanel Orientation="Horizontal" Margin="15">
-                            <materialDesign:PackIcon x:Name="windowMessageBoxIcon" Kind="Error" Foreground="White" Width="50" Height="50"/>
-                            <TextBlock x:Name="windowMessageBoxText" Foreground="White" Width="200" Margin="15 5" TextWrapping="Wrap">
-                                Error Message
-                            </TextBlock>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
-                            <Button Foreground="White" x:Name="windowMessageBoxDownloadBtn" IsEnabled="False" Visibility="Hidden" Click="windowMessageBoxDownloadBtn_Click">
-                                Download
-                            </Button>
-                            <Button x:Name="windowMessageBoxBtn" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center">
-                                Okay
-                            </Button>
-                        </StackPanel>
-
-                    </Grid>
-                </materialDesign:DialogHost.DialogContent>
-            </materialDesign:DialogHost>
-<!--#endregion-->
-
             <!--#region Cards-->
             <materialDesign:Card Grid.Row="1" Grid.Column="1" Width="200" Height="100" UniformCornerRadius="8" Background="#1B1B1A">
                 <materialDesign:Card.Effect>

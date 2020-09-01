@@ -1,0 +1,42 @@
+﻿<Window x:Class="lyzeDownloader.AutoUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lyzeDownloader"
+        mc:Ignorable="d"
+        Height="150"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Loaded="Window_Loaded"
+        >
+    <Grid>
+        <!--#region MessageBox-->
+        <materialDesign:DialogHost x:Name="windowMessageBox" IsOpen="False" BorderBrush="#1b1b1a" BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" Grid.RowSpan="5">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Width="400" Height="150" HorizontalAlignment="Center" Background="#1b1b1a">
+                    <StackPanel Orientation="Horizontal" Margin="15">
+                        <materialDesign:PackIcon x:Name="windowMessageBoxIcon" Kind="Error" Foreground="White" Width="50" Height="50"/>
+                        <TextBlock x:Name="windowMessageBoxText" Foreground="White" Width="200" Margin="15 5" TextWrapping="Wrap">
+                                Error Message
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
+                        <TextBlock x:Name="windowMessageBoxText2" Foreground="White" Margin="10" HorizontalAlignment="Left" TextWrapping="Wrap">
+                                Lade..
+                        </TextBlock>
+                        <Button x:Name="windowMessageBoxBtn" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center">
+                            Okay
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <!--#endregion-->
+    </Grid>
+</Window>

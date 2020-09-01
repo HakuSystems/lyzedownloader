@@ -57,12 +57,9 @@ namespace lyzeDownloader
             var thisVersion = Application.ResourceAssembly.ManifestModule.Assembly.GetName().Version;
             if (serverVersion > thisVersion)
             {
-                windowMessageBox.IsOpen = true;
-                windowMessageBoxIcon.Kind = PackIconKind.Information;
-                windowMessageBoxBtn.Content = "Okay";
-                windowMessageBoxDownloadBtn.IsEnabled = true;
-                windowMessageBoxDownloadBtn.Visibility = Visibility.Visible;
-                windowMessageBoxText.Text = "Ein Update Ist bereit.";
+                AutoUpdateWindow updateWindow = new AutoUpdateWindow();
+                updateWindow.Show();
+                this.Close();
             }
             else
             {
@@ -186,37 +183,6 @@ namespace lyzeDownloader
 
             
             client.DownloadFileAsync(new Uri(PathStrings.FLStudio20Url), PathStrings.desktopPath + PathStrings.FLStudio20Path + "FLStudio20.rar");
-        }
-
-        //MessageBoxDownloadBtn
-        private void windowMessageBoxDownloadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            closebtn.IsEnabled = false;
-
-            downloadAdobeBtn.IsEnabled = false;
-            downloadMusikBtn.IsEnabled = false;
-            downloadFLS20Btn.IsEnabled = false;
-
-            ProgressBarMusik.IsEnabled = false;
-            ProgressbrAdobe.IsEnabled = false;
-            ProgressbrFLS20.IsEnabled = false;
-
-            windowMessageBox.IsOpen = false;
-            windowMessageBox.IsOpen = true;
-            windowMessageBoxIcon.Kind = PackIconKind.DirectionsWalk;
-            windowMessageBoxBtn.Content = "Okay";
-            windowMessageBoxBtn.IsEnabled = false;
-            windowMessageBoxDownloadBtn.IsEnabled = false;
-            windowMessageBoxDownloadBtn.Visibility = Visibility.Visible;
-            windowMessageBoxText.Text = "Wird Heruntergeladen Bitte Warte..";
-
-
-            WebClient client = new WebClient();
-            Directory.CreateDirectory(PathStrings.desktopPath + PathStrings.AppExecutablePath);
-            client.DownloadProgressChanged += client_DownloadProgressChanged;
-            client.DownloadFileCompleted += client_DownloadFileCompleted;
-            client.DownloadFileAsync(new Uri(PathStrings.AppExecutableURL), PathStrings.desktopPath + PathStrings.AppExecutablePath + $"lyzeDownloaderUpdated.exe");
-
         }
 
         #endregion
